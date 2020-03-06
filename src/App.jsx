@@ -50,7 +50,9 @@ const Main = styled.main`
 `;
 
 export class App extends React.Component {
-  
+
+
+
   onHandleRegistration = (event) => {
     event.preventDefault();
 
@@ -61,11 +63,29 @@ export class App extends React.Component {
     const payload = {
       email, password
     };
-    //console.log(payload);
+    
     this.props.dispatch(register(payload));
   }
 
   render() {
+    
+    let  isSuccess;
+    
+
+
+    if (this.props.response.user_register.hasOwnProperty('isSuccess')) {
+     
+      isSuccess=this.props.response.user_register.isSuccess;
+       
+        if (isSuccess) {
+         //console.log(this.props.response.user_register.data.data.login);
+         const  user  = this.props.response.user_register.data.data.login;
+
+          
+        }
+
+    }
+
     
 
     return (
@@ -73,7 +93,9 @@ export class App extends React.Component {
         <ThemeProvider theme={theme}>
           <AppWrapper>
            
-            <h1>welcome</h1>
+            
+         
+           
 
           <form onSubmit={this.onHandleRegistration}>
           
@@ -100,7 +122,10 @@ export class App extends React.Component {
 }
 
 
+const mapStateToProps = (response) => ({
+  response
+});
 
 
-export default hot(connect()(App));
+export default hot(connect(mapStateToProps)(App));
 
